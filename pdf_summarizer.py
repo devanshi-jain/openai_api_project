@@ -1,4 +1,4 @@
-Authorization: Bearer OPENAI_API_KEY
+# Authorization: Bearer OPENAI_API_KEY
 
 import openai
 import os
