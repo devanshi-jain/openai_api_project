@@ -1,0 +1,11 @@
+.env
+# # Remove the .env file from Git
+# git rm --cached .env
+
+# # Add .env to .gitignore to prevent future commits
+# echo ".env" >> .gitignore
+
+# # Commit the changes
+# git add .gitignore
+# git commit -m "Remove .env file and add to .gitignore"
+# git push
