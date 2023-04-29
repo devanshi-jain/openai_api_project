@@ -1,9 +1,14 @@
-from io import StringIO
+# Authorization: Bearer OPENAI_API_KEY
+
+# /////////////////////////////////SETUP////////////////////////////////////////
+import openai
 import os
-import re # regular expressions
+
+
 
 # import necessary libraries
-# from pdfminer.high_level import extract_text
+from dotenv import load_dotenv
+from io import StringIO
 from pdfminer.layout import LAParams
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
@@ -14,7 +19,36 @@ from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 
 from prompt_iteration import get_completion
 
-# Function that takes a filename and a list of page numbers and returns the extracted text from the PDF for those pages
+
+# Load environment variables from .env file
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv()) #reads local .env file
+
+# Get value of OPENAI_API_KEY environment variable
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+# Set the API key for the OpenAI API client
+openai.api_key = openai_api_key
+
+# Use the OpenAI API client to make API requests
+# function uses the OpenAI API client to generate text based on a prompt using 
+# a language model specified by the model parameter (default is gpt-3.5-turbo)
+def get_completion(prompt, model="gpt-3.5-turbo"):
+    # user prompt (initialized as a list)
+    # 2 key-value pairs: role (indicates message is from 'user') and content.
+    messages = [{"role": "user", "content": prompt}]
+    # response from the api call
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        max_tokens=256,
+        temperature=0, # degree of randomness of the model's output
+        n = 1 # number of completions to generate for each prompt
+    )
+    return response.choices[0].message["content"]
+
+
+# Function that takes a filename and a list of page numbers and returns the extracted summary from the PDF for those pages
 def pdf_parse_text(file_path, page_num=None):
     output_string = StringIO()
     with open(file_path, 'rb') as in_file:
@@ -70,6 +104,8 @@ def pdf_parse_text(file_path, page_num=None):
     output_string.close()
     return content
 
-    
-pdf_text = pdf_parse_text('The Subtle Art.pdf', [4,72])
-print(pdf_text)
+# pdf_text = pdf_parse_text('cracking the coding interview.pdf', [15,16,17,18])
+# pdf_text = pdf_parse_text('The Subtle Art.pdf', [4,72])
+# print(pdf_text)
+
+
