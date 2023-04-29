@@ -40,7 +40,6 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     # .message contains the text of the completion
     # ["content"] is used to extract this text as a string
     return response.choices[0].message["content"]
-
 text_2 = f"""
 The sun is shining brightly today, and the birds are \
 singing. It's a beautiful day to go for a \ 
