@@ -46,7 +46,7 @@ Integral of 1/x wiht bounds of 0 and -3
 prompt = f"""
 You will be provided with text delimited by triple quotes. 
 If it contains one or more mathemtatical expressions (either expressed 
-using english words or mathmatical expressions), turn those expressions
+using english words and/or mathmatical expressions/terms), turn those expressions
 into LaTeX Code
 
 If the text does not contain a sequence mathmatical expressions, \ 
