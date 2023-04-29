@@ -42,6 +42,8 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
             # 1. log-likelihood score, 
             # 2. list of tokens representing the completion.
 
+# ///////////////////////TESTS FOR CLEAR AND SPECIFIC INSTRUCTIONS/////////////////////////
+
 # /////////////////////////////////TEST1_DELIMITERS////////////////////////////////////////
 # Use delimiters to clearly indicate distinct parts of the input
 # Delimiters can be anything like: ```, """, < >, `<tag> </tag>`, `:`
@@ -128,3 +130,7 @@ response = get_completion(prompt)
 print(response)
 
 
+# ////////////////////////////TESTS TO GIVE MODEL TIME TO THINK/////////////////////////////////
+# Instruct model to think longer about the problem => it spends more computational effort on the task
+
+# /////////////////////////////////TEST1_SPECIFY_STEPS_RQD////////////////////////////////////////
