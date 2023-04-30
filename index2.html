@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PDF Parser</title>
+  </head>
+  <body>
+    <h1>PDF Parser</h1>
+    <form id="pdf-form">
+      <label for="pdf-file">Select a PDF file:</label>
+      <input type="file" id="pdf-file" name="pdf-file">
+      <br>
+      <label for="page-numbers">Select page numbers:</label>
+      <select id="page-numbers" name="page-numbers">
+        <option value="all">All pages</option>
+        <option value="range">Page range</option>
+      </select>
+      <br>
+      <div id="page-range">
+        <label for="start-page">Start page:</label>
+        <input type="number" id="start-page" name="start-page">
+        <br>
+        <label for="end-page">End page:</label>
+        <input type="number" id="end-page" name="end-page">
+      </div>
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+      const form = document.getElementById('pdf-form');
+      const pageNumbers = document.getElementById('page-numbers');
+      const pageRange = document.getElementById('page-range');
+      const startPage = document.getElementById('start-page');
+      const endPage = document.getElementById('end-page');
+      const result = document.getElementById('result');
+
+      // Hide the page range input fields initially
+      pageRange.style.display = 'none';
+
+      // Show/hide the page range input fields based on the selected option
+      pageNumbers.addEventListener('change', () => {
+        if (pageNumbers.value === 'range') {
+          pageRange.style.display = 'block';
+        } else {
+          pageRange.style.display = 'none';
+        }
+      });
+
+      // Handle form submission
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const file = document.getElementById('pdf-file').files[0];
+        const pageNumberOption = document.getElementById('page-numbers').value;
+        let pageNumberData = pageNumberOption === 'all' ? 'all' : `${startPage.value}-${endPage.value}`;
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('page_numbers', pageNumberData);
+        const response = await fetch('/parse_pdf/', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+        result.textContent = data.text;
+      });
+    </script>
+  </body>
+</html>
