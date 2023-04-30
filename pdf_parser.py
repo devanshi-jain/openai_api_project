@@ -111,10 +111,10 @@ def pdf_parse_text(file_path, page_num=None):
 
 # pdf_text = pdf_parse_text('cracking the coding interview.pdf', [15,16,17,18])
 # pdf_text = pdf_parse_text('The Subtle Art.pdf',[16, 73])
-page_index = []
-for i in range(4, 71):
-    page_index.append(i)
-pdf_text = pdf_parse_text('animalfarm.pdf',page_index)
+# page_index = []
+# for i in range():
+#     page_index.append(i)
+pdf_text = pdf_parse_text('the-aeneid.pdf',[83])
 print(pdf_text)
 
 
