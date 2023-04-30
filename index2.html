@@ -24,7 +24,7 @@
         <input type="number" id="end-page" name="end-page">
       </div>
       <br>
-      <button type="submit">Submit</button>
+      <button type="submit" id="submit-btn">Submit</button>
     </form>
     <div id="result"></div>
 
@@ -64,6 +64,94 @@
         const data = await response.json();
         result.textContent = data.text;
       });
+
+      // Get the submit button element
+      var submitBtn = document.getElementById("submit-btn");
+      // Add a click event listener to the submit button
+      submitBtn.addEventListener("click", function(event) {
+        
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Get the page number inputs
+        var startPageInput = document.getElementById("start-page");
+        var endPageInput = document.getElementById("end-page");
+
+        // Get the page number values
+        var startPage = startPageInput.value;
+        var endPage = endPageInput.value;
+
+        // Create an XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+
+        // Set the method and URL for the request
+        xhr.open("POST", "/process_pages/");
+
+        // Set the appropriate headers for the request
+        xhr.setRequestHeader("Content-Type", "multipart/form-data");
+
+        // Load the PDF file using PDF.js
+        pdfjsLib.getDocument(pdfFile).promise.then(function(pdf) {
+        // Get the total number of pages in the PDF
+        const totalPages = pdf.numPages;
+        // Construct the array of page numbers based on the selected option
+        if (pageNumberOption === 'all') {
+          for (let i = 1; i <= totalPages; i++) {
+            pageNumbers.push(i);
+          }
+        } else if (pageNumberOption === 'range') {
+          // Parse the start and end page numbers from the form data
+          const startPage = parseInt(startPageInput.value);
+          const endPage = parseInt(endPageInput.value);
+          // Construct the array of page numbers for the specified range
+          for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(i);
+          }
+        }
+        // Send the form data to the server
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/process-pdf');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+          'page_numbers': pageNumbers
+        }));
+      }).catch(function(error) {
+        console.error('Error loading PDF file:', error);
+      });
+
+
+        // // Construct the page number list based on user selection
+        // let pageNumbers = [];
+        // const pageNumberOption = document.getElementById('page-numbers').value;
+        // if (pageNumberOption === 'all') {
+        //   const totalPages = 30; // Change this to the total number of pages in the PDF
+        //   for (let i = 1; i <= totalPages; i++) {
+        //     pageNumbers.push(i);
+        //   }
+        // } else {
+        //   const start = parseInt(startPage.value);
+        //   const end = parseInt(endPage.value);
+        //   for (let i = start; i <= end; i++) {
+        //     pageNumbers.push(i);
+        //   }
+        // }
+
+        // // Send the form data to the server
+        // const formData = new FormData();
+        // formData.append('pdf-file', document.getElementById('pdf-file').files[0]);
+        // formData.append('page-numbers', JSON.stringify(pageNumbers));
+        // xhr.send(formData);
+
+        // // Set the appropriate headers for the request
+        // xhr.setRequestHeader("Content-Type", "application/json");
+
+        // Send the form data to the server
+        xhr.send(JSON.stringify({
+            "start_page": startPage,
+            "end_page": endPage
+        }));
+        });
+
     </script>
   </body>
 </html>

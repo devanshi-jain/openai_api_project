@@ -57,13 +57,14 @@
         const formData = new FormData();
         formData.append('file', file);
         formData.append('page_numbers', pageNumberData);
-        const response = await fetch('/parse_pdf/', {
+        const response = await fetch('/', {
           method: 'POST',
           body: formData
         });
-        const data = await response.json();
-        result.textContent = data.text;
+        const data = await response.text();
+        result.innerHTML = data;
       });
+
     </script>
   </body>
 </html>

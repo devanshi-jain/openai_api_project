@@ -17,6 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+# ]
+from django.urls import path
+from BookBrief import views
+
+urlpatterns = [ path('bookbriefs/', views.BookBriefList.as_view()),
+    path('bookbriefs/<int:pk>/', views.BookBriefDetail.as_view()),
 ]
+    # path('', views.index, name='index'),

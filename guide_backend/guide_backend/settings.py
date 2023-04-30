@@ -25,8 +25,10 @@ SECRET_KEY = 'django-insecure-3s*^l5s^e%j)8zo&u++hxzt2!x#s%5p#%1%cse4(g12=t+^h(h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'bookbrief.rf.gd']
 
+# Add website domain name or IP address here
 
 # Application definition
 
@@ -37,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'BookBrief',
 ]
+# Added name of application in installed app section of settings.py
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -115,7 +119,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
+STATIC_URL = 'http://bookbrief.rf.gd/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

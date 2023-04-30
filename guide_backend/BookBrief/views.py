@@ -1,13 +1,42 @@
 from django.shortcuts import render
-from rest_framework import generics, status
-from rest_framework.response import Response
-from .models import Book
-from .serializers import BookSerializer
+# from rest_framework import generics, status
+# from rest_framework.response import Response
+# from .models import Book
+# from .serializers import BookSerializer
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from io import BytesIO
+import PyPDF2
+from PyPDF2 import PdfFileReader
 
-import io
-from django.shortcuts import render
-from django.http import JsonResponse
+import sys
+# sys.path.append('/path/to/myproject')
+from BookBrief.pdf_parser import pdf_parse_text
+# from guide_backend.BookBrief.pdf_parser import pdf_parse_text
 
+
+@csrf_exempt
+def summarize_pdf(request):
+    if request.method == 'POST':
+        # Get the uploaded file
+        uploaded_file = request.FILES['pdf_file']
+        # Read the PDF file from the buffer
+        pdf_reader = PdfFileReader(BytesIO(uploaded_file.read()))
+        # Get the total number of pages in the PDF file
+        total_pages = pdf_reader.getNumPages()
+        # Get the page numbers to parse
+        page_numbers = request.POST.getlist('page_numbers[]')
+        # Convert the page numbers to integers
+        page_numbers = [int(p) for p in page_numbers]
+        # Filter the page numbers that are greater than the total number of pages
+        page_numbers = [p for p in page_numbers if p <= total_pages]
+        # Call the pdf_parse_text function to get the summary of the specified pages
+        summary = pdf_parse_text(uploaded_file, page_numbers)
+        # Return the summary as the response
+        return HttpResponse(summary)
+    else:
+        # Return a 405 error if the request method is not POST
+        return HttpResponse('Method Not Allowed', status=405)
 
 
 # from PyPDF2 import PdfFileReader
