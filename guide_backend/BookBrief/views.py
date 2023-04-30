@@ -20,8 +20,6 @@ class BookDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-
-# Create your views here.
 # Views in Django are functions that take an HTTP request and return an HTTP response.
 # They define how the application handles various HTTP requests. 
 

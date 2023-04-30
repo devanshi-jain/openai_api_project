@@ -6,6 +6,8 @@ from django.db import models
 
 class Book(models.Model):
     # Define fields for the Book model
+    class Meta:
+        app_label = 'bookbrief'
 
     # - title: a CharField that can store up to 200 characters
     title = models.CharField(max_length=200)
