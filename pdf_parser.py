@@ -3,6 +3,7 @@
 # /////////////////////////////////SETUP////////////////////////////////////////
 import openai
 import os
+import re
 
 
 
@@ -17,8 +18,7 @@ from pdfminer.layout import LAParams, LTTextBox, LTTextLine
 from pdfminer.converter import PDFPageAggregator, TextConverter
 from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 
-from prompt_iteration import get_completion
-
+# from prompt_iteration import get_completion
 
 # Load environment variables from .env file
 from dotenv import load_dotenv, find_dotenv
@@ -55,8 +55,15 @@ def pdf_parse_text(file_path, page_num=None):
         resource_manager = PDFResourceManager()
         device = TextConverter(resource_manager, output_string, laparams=LAParams())
         interpreter = PDFPageInterpreter(resource_manager, device)
-        title = ''
-        author = ''
+        # Get the PDF document information
+        parser = PDFParser(in_file)
+        document = PDFDocument(parser)
+        metadata = document.info[0]
+        # Extract the title and author from the metadata dictionary
+        title = metadata.get('Title', '').decode()
+        author = metadata.get('Author', '').decode()
+        # Print the title and author
+        print(f'Title: {title}\nAuthor: {author}')
         page_counter = -1
         if page_num is None:
             for page in PDFPage.get_pages(in_file, maxpages=0, caching=True, check_extractable=True):
@@ -105,7 +112,7 @@ def pdf_parse_text(file_path, page_num=None):
     return content
 
 # pdf_text = pdf_parse_text('cracking the coding interview.pdf', [15,16,17,18])
-# pdf_text = pdf_parse_text('The Subtle Art.pdf', [4,72])
-# print(pdf_text)
+pdf_text = pdf_parse_text('The Subtle Art.pdf',[16, 73] )
+print(pdf_text)
 
 
