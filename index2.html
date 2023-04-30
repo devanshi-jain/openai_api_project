@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="{% static 'openai_api_project/guide_backend/static/BookBrief/css/bootstrap.min.css' %}">
     <meta charset="utf-8">
     <title>PDF Parser</title>
   </head>
   <body>
     <h1>PDF Parser</h1>
     <form id="pdf-form">
-      <label for="pdf-file">Select a PDF file:</label>
-      <input type="file" id="pdf-file" name="pdf-file">
-      <br>
-      <label for="page-numbers">Select page numbers:</label>
-      <select id="page-numbers" name="page-numbers">
-        <option value="all">All pages</option>
-        <option value="range">Page range</option>
-      </select>
-      <br>
-      <div id="page-range">
-        <label for="start-page">Start page:</label>
-        <input type="number" id="start-page" name="start-page">
-        <br>
-        <label for="end-page">End page:</label>
-        <input type="number" id="end-page" name="end-page">
+      <div class="mb-3">
+        <label for="pdf-file" class="form-label">Select a PDF file:</label>
+        <input type="file" id="pdf-file" name="pdf-file" class="form-control" required>
       </div>
-      <br>
-      <button type="submit">Submit</button>
+      <div class="mb-3">
+        <label for="page-numbers" class="form-label">Select page numbers:</label>
+        <select id="page-numbers" name="page-numbers" class="form-select" required>
+          <option value="all">All pages</option>
+          <option value="range">Page range</option>
+        </select>
+      </div>
+      <div id="page-range" style="display:none">
+        <label for="start-page" class="form-label">Start page:</label>
+        <input type="number" id="start-page" name="start-page" class="form-control">
+        <label for="end-page" class="form-label">End page:</label>
+        <input type="number" id="end-page" name="end-page" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <div id="result"></div>
 
@@ -66,5 +67,8 @@
       });
 
     </script>
+
+    <script src="{% static 'openai_api_project/guide_backend/static/BookBrief/js/jquery.min.js' %}"></script>
+    <script src="{% static 'openai_api_project/guide_backend/static/BookBrief/js/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>
