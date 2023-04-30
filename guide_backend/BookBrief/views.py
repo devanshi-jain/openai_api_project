@@ -14,13 +14,6 @@ def index(request):
     return render(request, 'index.html')
 
 
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
-
-@csrf_exempt
 def upload_book(request):
     if request.method == 'POST':
         # Get the uploaded file from the request
@@ -39,7 +32,6 @@ def upload_book(request):
         return render(request, 'upload.html')
 
 
-@csrf_exempt
 def summarize(request):
     if request.method == 'POST':
         # Get the uploaded file and page range from the form
