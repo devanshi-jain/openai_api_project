@@ -116,5 +116,3 @@ def pdf_parse_text(file_path, page_num=None):
 #     page_index.append(i)
 pdf_text = pdf_parse_text('the-aeneid.pdf',[83])
 print(pdf_text)
-
-
