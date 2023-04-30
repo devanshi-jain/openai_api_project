@@ -21,5 +21,5 @@ from BookBrief import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('upload/', views.upload_book, name='upload_book'),
-    path('parse-pdf/', views.parse_pdf, name='parse_pdf'),
+    path('summarize/', views.summarize, name='summarize'),
 ]

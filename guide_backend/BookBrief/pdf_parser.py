@@ -43,7 +43,7 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     )
     return response.choices[0].message["content"]
 
-def summarize(file, start_page=None, end_page=None):
+def summarize_helper(file, start_page=None, end_page=None):
     output_string = StringIO()
     with file as in_file:
         resource_manager = PDFResourceManager()
@@ -78,5 +78,5 @@ def summarize(file, start_page=None, end_page=None):
     return response
 
 with open('/Users/devanshijain/Documents/GitHub/openai_api_project/guide_backend/BookBrief/the-aeneid.pdf', 'rb') as pdf_file:
-    pdf_text = summarize(pdf_file,83, 83)
+    pdf_text = summarize_helper(pdf_file,83, 83)
     print(pdf_text)
