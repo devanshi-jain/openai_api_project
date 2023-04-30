@@ -5,8 +5,6 @@ import openai
 import os
 import re
 
-
-
 # import necessary libraries
 from dotenv import load_dotenv
 from io import StringIO
@@ -60,8 +58,8 @@ def pdf_parse_text(file_path, page_num=None):
         document = PDFDocument(parser)
         metadata = document.info[0]
         # Extract the title and author from the metadata dictionary
-        title = metadata.get('Title', '').decode()
-        author = metadata.get('Author', '').decode()
+        title = metadata.get('Title', '') #.decode() #TODO : add conditional block to check for by Author.
+        author = metadata.get('Author', '') #.decode()
         # Print the title and author
         print(f'Title: {title}\nAuthor: {author}')
         page_counter = -1
@@ -112,7 +110,11 @@ def pdf_parse_text(file_path, page_num=None):
     return content
 
 # pdf_text = pdf_parse_text('cracking the coding interview.pdf', [15,16,17,18])
-pdf_text = pdf_parse_text('The Subtle Art.pdf',[16, 73] )
+# pdf_text = pdf_parse_text('The Subtle Art.pdf',[16, 73])
+page_index = []
+for i in range(4, 71):
+    page_index.append(i)
+pdf_text = pdf_parse_text('animalfarm.pdf',page_index)
 print(pdf_text)
 
 
