@@ -58,7 +58,9 @@
         const formData = new FormData();
         formData.append('file', file);
         formData.append('page_numbers', pageNumberData);
-        const response = await fetch('/', {
+        const response = await fetch('upload/',{//('/', {
+          // sending the form request to the server to the index `/` url : renders the page you are viewing on the website
+          // you have to specify which url so the server knows what kind of form request this is
           method: 'POST',
           body: formData
         });
